@@ -273,15 +273,10 @@ class GemsFarming(CampaignRun, FleetEquipment, Dock):
             max_level = 70
 
         scanner = ShipScanner(level=(max_level, max_level), emotion=(10, 150),
-                              fleet=self.fleet_to_attack, status='free')
+                              status='free')
         scanner.disable('rarity')
+        scanner.disable('fleet')
 
-        ships = scanner.scan(self.device.image)
-        if ships:
-            # Don't need to change current
-            return ships
-
-        scanner.set_limitation(fleet=0)
         if self.config.GemsFarming_CommonDD in ['any', 'favourite', 'z20_or_z21']:
             # Change to any ship
             return scanner.scan(self.device.image, output=False)
